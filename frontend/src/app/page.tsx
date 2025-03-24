@@ -1,7 +1,9 @@
 // app/page.tsx
+"use client";
 import { PublishedPosts } from "@/components/publishedPosts";
 import { getAllPosts } from "@/request/requests";
 import { AuthButtons } from "@/components/authButtons";
+import { useEffect, useState } from "react";
 
 export interface PostProps {
   _id: string;
@@ -14,7 +16,12 @@ export interface PostProps {
 }
 
 export default async function HomePage() {
-  const posts = await getAllPosts();
+  const [posts, setPosts] = useState<PostProps[]>([]);
+  useEffect(() => {
+    getAllPosts()
+      .then((data) => setPosts(data))
+      .catch((err) => console.error(err));
+  }, []);
 
   return (
     <main className="min-h-screen bg-gray-100 py-10 px-4">
