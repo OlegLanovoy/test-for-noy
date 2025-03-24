@@ -1,4 +1,3 @@
-import { cn } from "@/lib/utils";
 import React from "react";
 import PostCard from "./postCard";
 import { PostProps } from "@/app/page";

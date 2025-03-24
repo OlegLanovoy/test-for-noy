@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { loginUser, registerUser } from "@/request/requests";
+import { AxiosError } from "axios";
 
 type AuthType = "login" | "register";
 
@@ -30,17 +31,17 @@ export default function LoginForm({ type }: LoginFormProps) {
 
     try {
       if (isLogin) {
-        const data = await loginUser(email, password);
+        await loginUser(email, password);
       } else {
-        const data = await registerUser(name, email, password);
-
-        console.log(data);
+        await registerUser(name, email, password);
       }
 
       router.push("/");
-    } catch (err: any) {
-      console.error(err);
-      setError(err.response?.data?.message || "Something went wrong");
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        console.error(err);
+        setError(err.response?.data?.message || "Something went wrong");
+      }
     } finally {
       setLoading(false);
     }
