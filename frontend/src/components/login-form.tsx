@@ -36,7 +36,7 @@ export default function LoginForm({ type }: LoginFormProps) {
         await registerUser(name, email, password);
       }
 
-      router.push("/");
+      router.push("/dashboard");
     } catch (err) {
       if (err instanceof AxiosError) {
         console.error(err);
