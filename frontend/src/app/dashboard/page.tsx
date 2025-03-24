@@ -130,6 +130,8 @@ export default function DashboardPage() {
               </Link>
 
               {post.isPublished ? (
+                <span>Published</span>
+              ) : (
                 <Button
                   size="sm"
                   variant="outline"
@@ -137,8 +139,6 @@ export default function DashboardPage() {
                 >
                   Make Public
                 </Button>
-              ) : (
-                <span>Published</span>
               )}
             </div>
           </div>
