@@ -1,5 +1,5 @@
 "use client";
-import { getPostById } from "@/request/requests";
+import { getPostById, IPost } from "@/services/posts.service";
 import { useEffect, useState } from "react";
 import { AxiosError } from "axios";
 
@@ -8,11 +8,7 @@ import { useParams } from "next/navigation";
 export default function PostPage() {
   const { id } = useParams();
 
-  const [post, setPost] = useState<{
-    title: string;
-    createdAt: string;
-    text: string;
-  }>();
+  const [post, setPost] = useState<IPost>();
 
   useEffect(() => {
     const fetchData = async () => {

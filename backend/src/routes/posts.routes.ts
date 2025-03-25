@@ -8,7 +8,7 @@ const postsRouter = Router();
 
 postsRouter.get('/', getAllPosts);
 postsRouter.get('/user', checkAuth, getPostsByUserId);
-postsRouter.get('/:id', checkAuth, postIdValidation, handleValidationErrors, getPostById);
+postsRouter.get('/:id', postIdValidation, handleValidationErrors, getPostById);
 postsRouter.put('/:id', checkAuth, postIdValidation, handleValidationErrors, publishPost);
 postsRouter.post('/save', checkAuth, postCreateValidation, handleValidationErrors, createPost);
 

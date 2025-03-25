@@ -28,11 +28,7 @@ export const register = async (req: Request, res: Response) => {
 
     const { passwordHash, ...userData } = user.toJSON();
 
-    res.cookie('token', token, {
-      maxAge: 30 * 24 * 60 * 60 * 1000,
-    }).json({
-      ...userData,
-    });
+    res.json({ token, ...userData });
   } catch (err) {
     console.log(err);
     res.status(500).json({
@@ -76,11 +72,7 @@ export const login = async (req: Request, res: Response) => {
 
         const { passwordHash, ...userData } = user.toJSON();
 
-        res.cookie('token', token, {
-          maxAge: 30 * 24 * 60 * 60 * 1000,
-        }).json({
-          ...userData,
-        });
+        res.json({ token, ...userData });
       }
     }
 

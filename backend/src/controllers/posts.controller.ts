@@ -7,11 +7,7 @@ import redis from "../config/redis";
 export const getPostsByUserId = async (req: Request, res: Response) => {
   try {
     const posts = await PostModel.find({ user: req.userId });
-    if (posts.length === 0) {
-      res.status(404).json({ error: { message: 'Posts not found' } });
-    } else {
-      res.status(200).json(posts);
-    }
+    res.status(200).json(posts);
   } catch (err) {
     console.error(err);
     res.status(500).json({
@@ -22,12 +18,12 @@ export const getPostsByUserId = async (req: Request, res: Response) => {
 
 export const getAllPosts = async (_req: Request, res: Response) => {
   try {
-    const posts = await PostModel.find({ isPublished: true }).populate('user').lean();
-    if (posts.length === 0) {
-      res.status(404).json({ error: { message: 'Published posts not found' } });
-    } else {
-      res.status(200).json(posts);
-    }
+    const posts = await PostModel.find({ isPublished: true })
+      .populate('user')
+      .sort({ createdAt: -1 })
+      .lean();
+
+    res.status(200).json(posts);
   } catch (err) {
     console.error(err);
     res.status(500).json({

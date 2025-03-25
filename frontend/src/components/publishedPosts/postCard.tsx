@@ -1,21 +1,8 @@
 // components/PostCard.tsx
+import { IPost } from "@/services/posts.service";
 import Link from "next/link";
 
-interface PostCardProps {
-  _id: string;
-  title: string;
-  createdAt: string;
-  user: {
-    fullName: string;
-  };
-}
-
-export default function PostCard({
-  _id,
-  title,
-  createdAt,
-  user,
-}: PostCardProps) {
+export default function PostCard({ _id, title, createdAt, user }: IPost) {
   return (
     <Link href={`/posts/${_id}`}>
       <div className="border rounded-xl p-4 hover:shadow-md transition bg-white">

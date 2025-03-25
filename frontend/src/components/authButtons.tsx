@@ -1,14 +1,31 @@
-import { cookies } from "next/headers";
+"use client";
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { logout } from "@/app/actions";
+import { useEffect, useState } from "react";
+import { Skeleton } from "./ui/skeleton";
 
-export const AuthButtons = async () => {
-  const cookieStore = await cookies();
-  const isAuth = cookieStore.get("token")?.value;
+export function AuthButtons() {
+  const [loading, setLoading] = useState(true);
+  const [isAuth, setIsAuth] = useState(false);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsAuth(true);
+    }
+    setLoading(false);
+  }, []);
+  const logout = () => {
+    localStorage.removeItem("token");
+    setIsAuth(false);
+  };
   return (
-    <>
-      {!isAuth ? (
+    <div className="flex justify-center gap-2 p-4">
+      {loading ? (
+        <>
+          <Skeleton className="h-9 w-[100px]" />
+          <Skeleton className="h-9 w-[100px]" />
+        </>
+      ) : !isAuth ? (
         <>
           <Link href="/login">
             <Button variant="default">Login</Button>
@@ -18,15 +35,15 @@ export const AuthButtons = async () => {
           </Link>
         </>
       ) : (
-        <div className="w-full flex justify-between">
+        <>
           <Link href={`/dashboard`}>
             <Button variant="outline">Dashboard</Button>
           </Link>
           <Button variant="destructive" onClick={logout}>
             Logout
           </Button>
-        </div>
+        </>
       )}
-    </>
+    </div>
   );
-};
+}

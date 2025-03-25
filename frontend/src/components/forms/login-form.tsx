@@ -5,8 +5,7 @@ import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { loginUser, registerUser } from "@/request/requests";
-import { AxiosError } from "axios";
+import { loginUser, registerUser } from "@/services/auth.service";
 
 type AuthType = "login" | "register";
 
@@ -31,16 +30,17 @@ export default function LoginForm({ type }: LoginFormProps) {
 
     try {
       if (isLogin) {
-        await loginUser(email, password);
+        const data = await loginUser(email, password);
+        localStorage.setItem("token", data.token);
       } else {
-        await registerUser(name, email, password);
+        const data = await registerUser(name, email, password);
+        localStorage.setItem("token", data.token);
       }
-
-      router.push("/dashboard");
+      router.push("/");
     } catch (err) {
-      if (err instanceof AxiosError) {
+      if (err instanceof Error) {
         console.error(err);
-        setError(err.response?.data?.message || "Something went wrong");
+        setError(err.message);
       }
     } finally {
       setLoading(false);

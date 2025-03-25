@@ -1,4 +1,5 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
+
 
 interface IPost {
   title: string;
@@ -24,15 +25,15 @@ const PostSchema = new Schema<IPost>(
     },
     user: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
     },
   },
   {
     timestamps: true,
-  }
+  },
 );
 
-const PostModel = model<IPost>("Post", PostSchema);
+const PostModel = model<IPost>('Post', PostSchema);
 
-export default PostModel;
+export default PostModel

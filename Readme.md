@@ -10,7 +10,7 @@
 
 ### 5. Implemented authorization and registration forms with sending data to the backend.
 
-### 6. Added post generation via a button calling generatePost and switching to the editor.
+### 6. Added post generation via a button calling generatePost.
 
 ### 7. Received posts by ID from the backend and displayed them in the editor and on the public page.
 
